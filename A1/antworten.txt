@@ -1,0 +1,38 @@
+﻿Bearbeitung Blatt 1 von Borheier, Sven; Saneke, Patrick; Normann, Daniela:
+
+
+
+1. ls | grep -c .pdf, "ls" listet die Dateien und Verzeichnisse, die im aktuellen Verzeichniss vorhanden sind, auf. "|" bewirkt, dass die Ausgabe von "ls" die Eingabe von grep wird. "grep" listet alle Zeilen eines angegebenen Names
+auf (also hier alle Zeilen des Befehls ("der Datei") "ls"). .pdf ist der Name nach dem gesucht wird (würde hier also alle .pdf-Dateien suchen, die ls auflistet). "-c" bewirkt allerdings, dass nur die Anzahl der
+.pdf-Dateien angezeigt wird.
+
+
+
+2. Zombies sind Prozesse, die verwaist sind, d.h. der Elternprozess wurde gekillt und dadurch sind die Kindprozesse ohne Beziehung -> Zombies
+
+3. Den Inhalt von Strings kann man in C nicht vergleichen, da Strings eigentlich Arrays von einzelnen Variablen vom Typ char sind.
+   Somit können einfache Vergleiche nicht einfach angewendet werden, da bei einem solchen Vergleich
+(z.B. ==) nur die jeweiligen Anfangsadressen/Basisadressen der Strings verglichen werden.
+
+
+
+4. a) for(;;) fork(); -> Erzeugt jeweils immer einen neuen Kindprozess, der den aktuellen Elternprozess kopiert. Verhalten:
+   Nach 1 Generation: Der erste Elternprozess erzeugt ein Kind -> 2 Prozesse
+   
+Nach 2 Generationen: Der alte Elternprozess und der Kindprozess erzeugen jeweils neue Kindprozesse -> 4 Prozesse
+   Nach 3 Generationen: Jetzt erzeugt jeder dieser 4 Prozesse wieder einen Kindprozess -> 8 Prozesse
+
+Nach n Generationen: Es verdoppelt sich somit immer die Anzahl der Prozesse (x2) -> also 2^n Prozesse 
+
+ 
+b)Es werden durch die abbruchlose for-Schleife immer neue Prozesse erzeugt, welche selbst nie ein Ende erreichen
+ und immer neue Prozesse erzeugen. Somit werden auch immer mehr und immer schneller neue PIDs vergeben, 
+bis keine mehr
+ vorhanden sind. Das Betriebssystem stürzt dann ab. Man sollte sowas vermeiden, da jeder soetwas programmieren könnte und somit könnte auch jeder
+ Sicherheitslücken in das Betriebssystem programmieren. Aus dem Grunde sollten Benutzer oder Gruppen in ihrer Anzahl der Prozesse 
+limitiert werden. 
+   
+Bsp. Einträge für diese Benutzer:
+   -> tux hard nproc 100
+   -> guests hard nproc 2000
+   
