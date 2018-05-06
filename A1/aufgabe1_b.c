@@ -12,26 +12,20 @@ int execlpfail;
 
 printf("Zu beobachtendes Programm mit einem Parameter eingeben: ");
 paramcount = scanf("%255s %255s", command, param);  
-if(errno < 0){
+if(paramcount == -1){
 	perror("scanf");
 	exit(EXIT_FAILURE);
 }
-while(getchar() != '\n');
 if(paramcount != 2){
 	printf("Bitte einen Befehl und genau einen Parameter eingeben!\n");
 }else{
 	printf("Kommando: %s, Parameter: %s\n", command, param);
 }
-execlpfail = execlp(command, param, NULL);
-if(execlpfail == -1){
-	if(errno < 0){
+while(getchar() != '\n');
+execlpfail = execlp(command, command, param, NULL);
+if(execlpfail == -1){	
 		perror("execlp");
 		exit(EXIT_FAILURE);
-	}
 }
-
-
-
 return 0;
-
 }

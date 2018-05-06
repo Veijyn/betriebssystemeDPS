@@ -15,7 +15,7 @@ char param[255];
 int paramcount;
 int execlpfail;
 int pid_fork;
-int status;
+//int status;
 int times_running;
 int out_file_desc;
 
@@ -29,16 +29,16 @@ if(argc == 1){
 }
 printf("Zu beobachtendes Programm mit einem Parameter eingeben: ");
 paramcount = scanf("%255s %255s", command, param);  
-if(errno < 0){
+if(paramcount == -1){
 	perror("scanf");
 	exit(EXIT_FAILURE);
 }
-while(getchar() != '\n');
 if(paramcount != 2){
 	printf("Bitte einen Befehl und genau einen Parameter eingeben!\n");
 }else{
 	printf("Kommando: %s, Parameter: %s, Iterationen: %d\n", command, param, times_running);
 }
+while(getchar() != '\n');
 out_file_desc = open("out.txt", O_CREAT | O_APPEND | O_WRONLY);
 if(out_file_desc == -1){
 	perror("open");
@@ -47,7 +47,7 @@ if(out_file_desc == -1){
 for(int i = 0; i < times_running; i++){
 	if(i!=0){
 		sleep(5);
-	}
+	}	
 	pid_fork = fork();
 	if(pid_fork == -1){
 		perror("fork"),
@@ -59,18 +59,15 @@ for(int i = 0; i < times_running; i++){
 			perror("dup2");
 			exit(EXIT_FAILURE);
 		}
-		execlpfail = execlp(command, param, NULL);
-		if(execlpfail == -1){
-			if(errno < 0){
-				perror("execlp");
-				exit(EXIT_FAILURE);
-			}	
-		}
-		printf("!<--------------------------------------------------------------------------------->!\n");
-		_exit(status);
-	}
-	wait(&status);
-	if(errno < 0){
+		printf("<!-------------------------------------------------------------------------!>\n");
+		execlpfail = execlp(command, command, param, NULL);
+		if(execlpfail == -1){		
+				perror("execlp");				
+				exit(EXIT_FAILURE);		
+		}			
+		//_exit(status); 	
+	}	
+	if(wait(NULL) == -1){
 		perror("wait");
 		exit(EXIT_FAILURE);
 	}
