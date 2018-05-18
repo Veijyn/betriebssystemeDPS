@@ -1,0 +1,82 @@
++--------------------+
+|   1. Scheduling    |
++--------------------+
+
+1.1)
++---+------------------------------+
+| A |CCCIII   CCCIII CCCIIICCCIII C|
+| B |   CCCIIIIIIICCCIIIIIII   CCCI|
+| C |      CCC   CIIIII CCC   CIIII|
++---+------------------------------+
+
+1.2)
+Die Zeitscheibenlänge bestimmt maßgeblich die Effektivität des Verfahrens.
+Ist sie zu lang -> Degenerierung zu FCFS, ist sie zu kurz -> sehr hoher 
+Overhead. Des weiteren gibt es Leistungsprobleme: E/A-lastige Prozesse
+beenden ihren CPU-Stoß innerhalb ihrer Zeitscheibe – sie blockieren und 
+kommen mit Ende ihres E/A-Stoßes in die Bereitliste. CPU-lastige Prozesse 
+schöpfen dagegen ihre Zeitscheibe voll aus – sie werden verdrängt und 
+kommen sofort wieder in die Bereitliste. Die CPU-Zeit ist zu Gunsten 
+CPU-lastiger Prozesse ungleich verteilt – E/A-lastige Prozesse werden
+schlecht bedient und dadurch Geräte schlecht ausgelastet – die Varianz 
+der Antwortzeit E/A-lastiger Prozesse erhöht sich.
+
+
++--------------------+
+| 2. Synchronisation |
++--------------------+
+
+2.1)
+Aktives Warten wird mittels wiederholt auszuführenden Anweisungen 
+(Iterationen mit Schleifen), mit denen geprüft wird, ob die Bedingung 
+erfüllt ist, implementiert. Aktives Warten nutzt Prozessorkapazität für 
+sofortige, wiederholte Überprüfung. Die Datenstruktur eines Semaphors
+besteht aus einem Zähler und einer Warteschlange für die Aufnahme
+blockierter Prozesse. Semaphore regeln durch Zählen Wechselwirkungs-
+situationen von Prozessen und realisieren ein passives Warten der 
+Prozesse, wenn eine Weiterausführung nicht gestattet werden kann.
+
+2.2)
+
+Eine Schlossvariable ist ein abstrakter Datentyp, auf dem zwei 
+Operationen definiert sind: Das Eintrittsprotokoll "acquire", welches 
+einen Prozess, bis das zugehörige Schloss offen ist, verzögert und "von 
+innen" verschließt, wenn es offen ist und das Austrittsprotokoll 
+"release", welches ohne einen öffnenden Prozess zu verzögern, ein 
+Schloss öffnet. Kritisch sind ist die Phase vom Verlassen der 
+Kopfschleife bis zum Setzen der Schlossvariablen. Die Verdrängung des 
+laufenden Prozesses kann einen anderen Prozess ebenfalls das Schloss 
+geöffnet vorfinden lassen. Im weiteren Verlauf könnten (mindestens) 
+zwei Prozesse den eigentlich zu schützenden kritischen Abschnitt 
+überlappt ausführen. Schutz eines kritischen Abschnitts bildet selbst 
+einen kritischen Abschnitt: acquire muss als Elementaroperation 
+implementiert sein, d.h. das Eintrittsprotokoll muss unteilbar 
+ausgeführt werden.
+
+
++--------------------+
+| 3. Programmierung  |
++--------------------+
+
+3.1)
+- Matrix-Groesse 10 X 10, Ausfuehrungszeit: 6 [us]
+- Matrix-Groesse 100 X 100, Ausfuehrungszeit: 5958 [us]
+- Matrix-Groesse 1000 X 1000, Ausfuehrungszeit: 7763923 [us]
+
+3.2.a)
+- Anzahl Threads 10, Matrix-Groesse 10 X 10, Ausfuehrungszeit: 462 [us]
+- Anzahl Threads 100, Matrix-Groesse 100 X 100, Ausfuehrungszeit: 3674 [us]
+- Es werden (#1000) Faeden instanziiert. Dieses System verfuegt ueber (#1)
+  Prozessoren. Thread creation has failed!: Resource temporarily unavailable
+
+Die Parallelisierung von Prozessen mit Threads lohnt sich nicht in jedem Fall:
+Ist die Gesamtzahl der auszuführenden Operationen innerhalb des Programmes
+sehr gering, lohnt sich eher eine serielle Implementierung. Ist die Gesamt-
+zahl der Operationen innerhalb des Programms zu hoch, wird zu viel Speicher
+gebraucht. Eine Parallelisierung mit Threads eignet sich, wenn sich die Anzahl 
+der Operationen in einem "Mittelmaß" befinden.
+
+3.2.b)
+Es ist nicht sinnvoll jedes einzelne Element der Ergebnismatrix parallel zu
+berechnen, da je größer die zu berechnende Matrix ist, exponentiell mehr 
+Speicher benötigt würde. Es kann schnell  zu Speicherzugriffsfehlern kommen.
