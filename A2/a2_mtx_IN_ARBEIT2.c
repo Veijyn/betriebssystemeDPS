@@ -144,10 +144,22 @@ void* threadpool(void* arg)
 
    while(1) {
       if(pool->jobqueue != NULL){                               // Gibt es Aufgaben in der Queue?
+	      
+	      if(pthread_mutex_lock(&pool->queue)!=0){
+			 perror("mutex lock");					//MEIN TEXT: JOBVERTEILUNG!!!
+			 exit(EXIT_FAILURE);
+			 }
+	      
          job = pool->jobqueue;					// Nehme eine Aufgabe heraus (nach dem FIFO-Prinzip)
          pool->jobqueue = job->next;				// Setze den Zeiger auf die naechste Aufgabe, die herausgenommen werden soll
          pool->tail = (job == pool->tail ? NULL : pool->tail);  // Aktualisiere den Zeiger fuer das letzte Element der Queue. Falls die aktuelle Aufgabe die letzte war, setze Zeiger auf NULL.
-         (job->function)(job->row);				// Rufe die durch die Aufgabe definierte Funktion mit den entsprechenden Parametern auf.
+         
+	      if(pthread_mutex_unlock(&pool->queue)!=0){
+			 perror("mutext unlock");			//MEIN TEXT: UNLOCK!!!
+			 exit(EXIT_FAILURE);
+			 }
+	      
+	 (job->function)(job->row);				// Rufe die durch die Aufgabe definierte Funktion mit den entsprechenden Parametern auf.
          free(job);						// Gib den Speicher fuer die Aufgabe frei.
          continue;						// Springe zur Schleifenbedingung
       }
