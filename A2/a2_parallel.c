@@ -123,7 +123,7 @@ int main(void) {
 	if(pthread_create(&array_threads[i], NULL, &mmult, (void *) i)!=0){
 	
 		//Beende Programm im Fehlerfall sofort und gebe den Fehler aus
-		perror("Thread creation has failed!");
+		perror("pthread_create");
 		exit(-1);
 	}
 	}
@@ -138,7 +138,7 @@ int main(void) {
 		if(pthread_join(array_threads[i], NULL) != 0){
 			
 			//Beende Programm im Fehlerfall sofort und gebe den Fehler aus
-			perror("Thread cannot join!");
+			perror("pthread_join");
 			exit(-1);
 		}
 	}
