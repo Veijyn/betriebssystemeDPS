@@ -1,1 +1,24 @@
-in Arbeit
+Bearbeitung Blatt 3 von Borheier, Sven; Saneke, Patrick; Normann, Daniela:
+
+
+
+1. Das Betriebsmittel sind die einzelnen Chemikalienflaschen. Diese sind wiederverwendbare Betriebsmittel.
+
+2. mutual exclusion: diese Bedingung ist erfüllt, da nur eine begrenzte Anzahl Chemikalienflaschen für die einzelnen Chemiker zur Vefügung steht. 
+   D.h. wenn alle Chemikalienflaschen verbraucht sind, ist eine bestimmte Chemikalienflasche logischerweise nicht mehr nutzbar und jede Chemikalienflasche ist auch nur 
+   unteilbar nutzbar.
+   hold and wait: die einzelnen, unterschiedlichen Chemikalienflaschen sind ebenfalls nur nacheinander belegbar, da ein Chemiker nur eine Chemikalienflasche gleichzeitig
+   holen kann. 
+   no preemption: die einzelnen Chemikalienflaschen sind ebenfalls nicht rückforderbar, da die Chemiker auf andere Chemiker warten bis diese die Flaschen zurückbringen 
+   und diese nicht selbst zurückfordern.
+   circular wait Beispielsituation Labor: wenn beispielsweise von zwei unterschiedlichen Chemikalien keine Flaschen mehr im Vorrat sind, jetzt aber alle Chemiker eine
+   dieser Chemikalienflaschen bei sich haben und dann jeweils genau die andere nicht mehr im Vorrat vorhandene Chemikalienflaschen benötigen, ist eine geschlossene Kette 
+   vorhanden und es tritt circular wait auf (die Chemiker warten jeweils auf einen anderen Chemiker der die andere Flasche zurückbringt und dieses gegenseitig).
+
+3. In Teil c) der Programmieraufgabe wird die Bedingung "hold and wait" entkräftet, da durch den Mutex umschlossen die Chemiker alle benötigten Chemikalienflaschen für
+   das Rezept auf einmal holen und nicht nacheinander/einzeln. D.h. die Betriebsmittel (die Chemikalienflaschen) sind nicht mehr nur schrittweise belegbar.
+   Verklemmungen können nun deshalb nicht mehr auftreten, da die einzelnen Chemiker ihre benötigen Chemikalienflaschen für die Rezepte immer alle gleichzeitig holen und
+   somit ihr Experiment fertigstellen können, ohne dass sie nochmal eine Flasche aus dem Vorrat holen müssen. Sie geben die Flaschen dann alle gleichzeitig wieder zurück.
+   Hierdurch fordert ein Chemiker keine neue Flasche einzeln und und es kann dadurch auch nicht zum gegenseitigem Ausschluss kommen, da nur immer ein Chemiker Zugriff
+   Zugriff auf den Vorrat hat. Also einer kann dann auf jeden Fall immer sein Experiment beenden. Eine geschlossene Kette entsteht nicht und eine Verklemmung tritt somit
+   nicht auf.
