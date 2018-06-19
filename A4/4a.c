@@ -2,26 +2,26 @@
 #include <stdio.h> 
 #include <assert.h>
 
-/*int global_current_number = 0;
-int first = 1;*/
-
-//mem_info* ptr_remember = allocation_list;allocation_list[tmp].length-allocation_list[local_tmp].length
 int tmp = 0;
 
 int iterate_through_space(unsigned int size_global_chunks){
-    int local_tmp = tmp;
+    int local_tmp = tmp;    
     for(int i = tmp; i < size_global_chunks; i++){      
-        if(allocation_list[tmp].status == 0){           
+        if(allocation_list[i].status == CHUNK_ALLOCATED){       
+            tmp = tmp + allocation_list[i].length;    
+            i = i+allocation_list[i].length-1;            
+        }else{
             return i;
-        }
-        tmp++;      
+        }            
     }
     tmp = 0;
     for(int i = 0; i < local_tmp; i++){      
-         if(allocation_list[tmp].status == 0){          
+        if(allocation_list[i].status == CHUNK_ALLOCATED){     
+            tmp = tmp + allocation_list[i].length;     
+            i = i+allocation_list[i].length-1;            
+        }else{
             return i;
-        }
-        tmp++;      
+        }             
     }
     return -1;
 }
@@ -30,41 +30,49 @@ void *nf_alloc(size_t size)
 {
     unsigned int size_in_chunks = size_to_chunks(size);  
 	unsigned int size_global_chunks = size_to_chunks(CHUNK_SIZE*NUM_CHUNKS);  
-    int local_tmp = tmp;
+    int local_tmp = tmp;  
 
     if(size != 0 && size_in_chunks <= size_global_chunks){
 
         if(allocation_list[tmp].status == CHUNK_FREE && allocation_list[tmp].length >= size_in_chunks){         
-            if(allocation_list[tmp].length > size_in_chunks){                  
-                for(int i = 0; i < size_in_chunks; i++){    
-                    tmp++;  
-                }                         
+            if(allocation_list[tmp].length > size_in_chunks){                 
+                                        
                 allocation_list[local_tmp].status = CHUNK_ALLOCATED; 
                 allocation_list[local_tmp].length = size_in_chunks;
-                allocation_list[local_tmp+size_in_chunks].length = allocation_list[tmp].length-allocation_list[local_tmp].length;
-                return &heap[local_tmp*CHUNK_SIZE];
-            }else{
-                if(iterate_through_space(size_global_chunks)!=-1){       
-                    allocation_list[local_tmp].status = CHUNK_ALLOCATED; 
-                    allocation_list[local_tmp].length = size_in_chunks;    
-                    allocation_list[tmp+size_in_chunks].length =  allocation_list[tmp].length-allocation_list[local_tmp].length;
-                    return &heap[local_tmp*CHUNK_SIZE];
+                if(iterate_through_space(size_global_chunks)!=-1){
+                    allocation_list[tmp].status = CHUNK_FREE;
+                    allocation_list[tmp].length = size_global_chunks-size_in_chunks;     // Subtraktion anpassen für alle Fälle              
+                }else{
+                    tmp = local_tmp;
                 }
+                return &heap[local_tmp*CHUNK_SIZE];
+            }else{                             
+                allocation_list[local_tmp].status = CHUNK_ALLOCATED; 
+                allocation_list[local_tmp].length = size_in_chunks;  
+                if(iterate_through_space(size_global_chunks)==-1){  
+                   tmp = local_tmp;
+                }
+                return &heap[local_tmp*CHUNK_SIZE];
             }
         }else{
             if(iterate_through_space(size_global_chunks)!=-1){
                 allocation_list[tmp].status = CHUNK_ALLOCATED; 
                 allocation_list[tmp].length = size_in_chunks;
                 if(iterate_through_space(size_global_chunks)!=-1){
-                     allocation_list[tmp+size_in_chunks].length =  allocation_list[tmp].length-allocation_list[local_tmp].length;
+                     allocation_list[tmp].status = CHUNK_FREE;
+                     allocation_list[tmp].length = allocation_list[tmp].length-allocation_list[local_tmp].length;
                      return &heap[tmp*CHUNK_SIZE];
+                }else{
+                    tmp = local_tmp;
                 }
+            }else{
+                    tmp = local_tmp;
             }
         }
         return NULL;
     }
     return NULL;
-
+}
     /*
     // ######################################################### alt ###########################################
 	unsigned int size_in_chunks = size_to_chunks(size);  
@@ -184,5 +192,5 @@ void *nf_alloc(size_t size)
         }       
     }   
 	return NULL;   // für Fall Speicher insgesamt zu wenig und size = 0
-    */
-}
+   
+}*/
