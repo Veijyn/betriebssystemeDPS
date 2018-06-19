@@ -41,7 +41,7 @@ Buddy-Verfahren auf die nächste Zweierpotenz, aufrundet. Den Prozessen
 wird also unter Umständen mehr Speicher zugewiesen, als er benötigt. Der
 ungenutzte Speicher ist der interne Verschnitt.
 
-Verschnitt ist nichts anderes als ungenutzter Freispeicher.
+Verschnitt ist nichts anderes als ungenutzter Speicher.
 
 +---------------------------+
 |   3. Seitenadressierung   |
