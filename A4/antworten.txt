@@ -1,1 +1,52 @@
 
++---------------------------+
+| 1. Platzierungsstrategien |
++---------------------------+
+
+a) Im "Best Fit"-Verfahren wird immer nach der kleinsten Speicherlücke
+gesucht, in der der neu geladene Prozess  hineinpasst. Durch häufige
+Wiederfreigabe und Wiederanfrage von Speicher entstehen nicht nutzbare
+Lücken, auch externer Verschnitt genannt. Soll nun erneut Speicher
+angefragt werden, für den zwar insgesamt genügend Speicher zur Verfügung 
+steht, allerdings nicht an einem Stück, so wird der angefragte Speicher
+in Teilstücke zerlegt und über den Gesamtspeicher verteilt. Er ist somit
+fragmentiert.
+
+b) Mit den Platzierungsstrategien "Best Fit" und "Worst Fit" müssen erst 
+alle freien Speicherlücken überprüft werden, denn erst dann kann 
+entschieden werden, in welche dieser Speicherlücken der angefragte 
+Speicher laut Belegungsstrategie die passendste ist (bei "Best Fit" eben 
+die kleinste passende Lücke und bei "Worst Fit" die größte passende Lücke).
+Bei den Strategien "First Fit" und "Next Fit" muss keine solche 
+Überprüfung stattfinden. Allerdings hat das Verfahren "Next Fit" gegenüber
+"First Fit" den Vorteil, dass nicht erst wieder ganz am Anfang des 
+Gesamtspeichers nach freiem Speicher gesucht wird, sondern mit der Suche
+dort wiedereinsetzt, wo zuletzt erfolgreich Freispeicher gefunden wurde.
+
+Die beste Laufzeit für Allokationsanfragen bietet das "Next Fit"-Verfahren.
+
+
++---------------------------+
+|      2. Verschnitt        |
++---------------------------+
+
+Man spricht vom externen Verschnitt, wenn freie Speicherblöcke zwischen
+den Prozessen liegen. Die können sich über den gesamten Speicher verteilen. 
+Durch wiederholte Speicheranfrage - und wiederfreigabe kann es zu vielen 
+kleinen Speicherlücken kommen.
+
+Interner Verschnitt taucht dann auf, wenn man entweder den Gesamtspeicher
+in Blöcke fester Größe einteilt oder den angefragten Speicher, wie im 
+Buddy-Verfahren auf die nächste Zweierpotenz, aufrundet. Den Prozessen
+wird also unter Umständen mehr Speicher zugewiesen, als er benötigt. Der
+ungenutzte Speicher ist der interne Verschnitt.
+
+Verschnitt ist nichts anderes als ungenutzter Freispeicher.
+
++---------------------------+
+|   3. Seitenadressierung   |
++---------------------------+
+
+a)
+
+b)
