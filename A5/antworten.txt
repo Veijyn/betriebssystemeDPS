@@ -1,1 +1,41 @@
++-------------------------------- ----+
+| 1. Das /dev-Verzeichnis unter Linux |
++-------------------------------------+
 
+1. Bei den Spezialgeräten null und full handelt es sich um 
+zeichenorientierte Geräte. Man erkennt die Unterscheidung
+zwischen blockorientietren und zeichenorientierten Geräten an dem
+ersten Buchstaben der Strings "crw" und "brw". Das "c" steht für 
+zeichenorientiert und das "b" für blockorieniert.
+
+2. Die Zeichenkette "-rw-rw-" zeigt, dass den Geräten die Rechte
+lesen, schreiben und ausführen eingeräumt werden.
+
+3. /dev/null – wird gerne verwendet, um unerwünschte Ausgaben auf
+die Standardausgabe zu beseitigen. Dabei wird einfach die Ausgabe
+mit programmname > /dev/null umgeleitet. Kurz: wird als 
+Müllschlücker verwendet.
+
+/dev/full – wird verwendet, um ein Programm beim Abspeichern 
+einer Datei darauf zu testen, was passiert, wenn kein Platz mehr 
+zum Speichern vorhanden ist. Jeder Kopiervorgang in die Datei 
+/dev/full setzt errno auf ENOSPC.
+
+(aus: http://openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap05-004.htm)
+
++-------------------------------- ----+
+|        2. Zugriffsprimitiven        |
++-------------------------------------+
+
+Jede geöffnete Datei hat einen Schreib-/Lesezeiger, der auf die
+Position (Offset) zeigt, ab der nachfolgende Schreib-/
+Leseoperationen in der Datei stattfinden sollen.
+
+Nach einem erfolgreichen Aufruf von fopen gibt die Funktion einen
+Schreib-/Lesezeiger auf die neu erstellte FILE-Struktur zurück.
+
+Diese Struktur beinhaltet alle Informationen, die für die höheren
+Datei-E/A-Funktionen benötigt werden, beispielsweise den Puffer, 
+die Anfangsadresse, den aktuellen Zeiger, die Größe den 
+File-Deskriptor, die Position des Schreib- oder Lesezeigers, die 
+Fehler- und EOF-Flags.
