@@ -9,8 +9,8 @@ ersten Buchstaben der Strings "crw" und "brw". Das "c" steht für
 zeichenorientiert und das "b" für blockorieniert.
 
 2. Beide Geräte besitzen folgende Unix-Rechte: 
-Für den Besitzer der Datei: lesen und schreiben (erstes"rw-")
-Für die Gruppe zu der die Datei gehört: lesen und schreiben (zweites "rw-")
+Für den Besitzer der Datei (dem Gerät): lesen und schreiben (erstes"rw-")
+Für die Gruppe zu der die Datei (dem Gerät) gehört: lesen und schreiben (zweites "rw-")
 Für alle anderen Benutzer: lesen und schreiben (drittes "rw-")
 
 3. /dev/null – wird gerne verwendet, um unerwünschte Ausgaben auf
