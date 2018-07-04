@@ -23,7 +23,6 @@ einer Datei darauf zu testen, was passiert, wenn kein Platz mehr
 zum Speichern vorhanden ist. Jeder Kopiervorgang in die Datei 
 /dev/full setzt errno auf ENOSPC.
 
-(aus: http://openbook.rheinwerk-verlag.de/linux_unix_programmierung/Kap05-004.htm)
 
 +-------------------------------- ----+
 |        2. Zugriffsprimitiven        |
