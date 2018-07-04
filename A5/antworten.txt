@@ -33,10 +33,13 @@ Position (Offset) zeigt, ab der nachfolgende Schreib-/
 Leseoperationen in der Datei stattfinden sollen.
 
 Nach einem erfolgreichen Aufruf von fopen gibt die Funktion einen
-Schreib-/Lesezeiger auf die neu erstellte FILE-Struktur zurück.
+Schreib-/Lesezeiger auf die neu erstellte FILE-Struktur zurück und
+nimmt den Wert 0 an.
 
 Diese Struktur beinhaltet alle Informationen, die für die höheren
 Datei-E/A-Funktionen benötigt werden, beispielsweise den Puffer, 
 die Anfangsadresse, den aktuellen Zeiger, die Größe den 
 File-Deskriptor, die Position des Schreib- oder Lesezeigers, die 
 Fehler- und EOF-Flags.
+
+
